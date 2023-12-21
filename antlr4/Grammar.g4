@@ -109,9 +109,7 @@ Integer_literal : [0-9]+;
 Floating_point_literal : [0-9]+ '.' [0-9]+;
 char_literal : '\'' . '\'';
 string_literal : '"' . '"';
-bool_literal : True_literal | False_literal;
-True_literal : 'true';
-False_literal : 'false';
+bool_literal : 'true' | 'false';
 null_literal : 'null';
 // OPERATORS
 
