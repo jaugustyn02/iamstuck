@@ -34,7 +34,7 @@ for_range_statement : 'FOR' Id 'IN RANGE(' expr ',' expr (',' expr)?')' ':' stat
 
 for_each_statement : 'FOR' Id 'IN' Id ':' statement+;
 
-// 
+
 pass_statement : 'PASS';
 assignment_statement : data_types Id '=' expr
                      ;
@@ -103,16 +103,16 @@ Id : [a-zA-Z_][a-zA-Z0-9_]*;
 
 // LITERALS
 
-constant : Integer_literal | Floating_point_literal | Char_literal | String_literal | bool_literal | Null_literal;
+constant : Integer_literal | Floating_point_literal | char_literal | string_literal | bool_literal | null_literal;
 
 Integer_literal : [0-9]+;
 Floating_point_literal : [0-9]+ '.' [0-9]+;
-Char_literal : '\'' . '\'';
-String_literal : '"' . '"';
+char_literal : '\'' . '\'';
+string_literal : '"' . '"';
 bool_literal : True_literal | False_literal;
 True_literal : 'true';
 False_literal : 'false';
-Null_literal : 'null';
+null_literal : 'null';
 // OPERATORS
 
 equal : '==';
@@ -135,14 +135,14 @@ float : 'float';
 
 // DATA STRUCTURE
 
-data_structures : Stack_literal
-                | Deque_literal
-                | Queue_literal
+data_structures : stack
+                | deque
+                | queue
                 ;
 
-Stack_literal : 'STACK' ;
-Queue_literal : 'QUEUE' ;
-Deque_literal : 'DEQUE' ;
+stack : 'STACK' ;
+queue : 'QUEUE' ;
+deque : 'DEQUE' ;
 
 // ARITHMETIC OPERATORS
 
