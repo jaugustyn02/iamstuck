@@ -17,6 +17,105 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#statement.
+    def enterStatement(self, ctx:GrammarParser.StatementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#statement.
+    def exitStatement(self, ctx:GrammarParser.StatementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#block_statement.
+    def enterBlock_statement(self, ctx:GrammarParser.Block_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#block_statement.
+    def exitBlock_statement(self, ctx:GrammarParser.Block_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#single_statement.
+    def enterSingle_statement(self, ctx:GrammarParser.Single_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#single_statement.
+    def exitSingle_statement(self, ctx:GrammarParser.Single_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#loop_statement.
+    def enterLoop_statement(self, ctx:GrammarParser.Loop_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#loop_statement.
+    def exitLoop_statement(self, ctx:GrammarParser.Loop_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#for_statement.
+    def enterFor_statement(self, ctx:GrammarParser.For_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#for_statement.
+    def exitFor_statement(self, ctx:GrammarParser.For_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#if_statement.
+    def enterIf_statement(self, ctx:GrammarParser.If_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#if_statement.
+    def exitIf_statement(self, ctx:GrammarParser.If_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#while_statement.
+    def enterWhile_statement(self, ctx:GrammarParser.While_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#while_statement.
+    def exitWhile_statement(self, ctx:GrammarParser.While_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#for_range_statement.
+    def enterFor_range_statement(self, ctx:GrammarParser.For_range_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#for_range_statement.
+    def exitFor_range_statement(self, ctx:GrammarParser.For_range_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#for_each_statement.
+    def enterFor_each_statement(self, ctx:GrammarParser.For_each_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#for_each_statement.
+    def exitFor_each_statement(self, ctx:GrammarParser.For_each_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#pass_statement.
+    def enterPass_statement(self, ctx:GrammarParser.Pass_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#pass_statement.
+    def exitPass_statement(self, ctx:GrammarParser.Pass_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#assignment_statement.
+    def enterAssignment_statement(self, ctx:GrammarParser.Assignment_statementContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#assignment_statement.
+    def exitAssignment_statement(self, ctx:GrammarParser.Assignment_statementContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#expr.
     def enterExpr(self, ctx:GrammarParser.ExprContext):
         pass
@@ -104,69 +203,6 @@ class GrammarListener(ParseTreeListener):
 
     # Exit a parse tree produced by GrammarParser#structure_declaration.
     def exitStructure_declaration(self, ctx:GrammarParser.Structure_declarationContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#assignment_statement.
-    def enterAssignment_statement(self, ctx:GrammarParser.Assignment_statementContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#assignment_statement.
-    def exitAssignment_statement(self, ctx:GrammarParser.Assignment_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#statement.
-    def enterStatement(self, ctx:GrammarParser.StatementContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#statement.
-    def exitStatement(self, ctx:GrammarParser.StatementContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#for_statement.
-    def enterFor_statement(self, ctx:GrammarParser.For_statementContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#for_statement.
-    def exitFor_statement(self, ctx:GrammarParser.For_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#if_statement.
-    def enterIf_statement(self, ctx:GrammarParser.If_statementContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#if_statement.
-    def exitIf_statement(self, ctx:GrammarParser.If_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#while_statement.
-    def enterWhile_statement(self, ctx:GrammarParser.While_statementContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#while_statement.
-    def exitWhile_statement(self, ctx:GrammarParser.While_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#for_range_statement.
-    def enterFor_range_statement(self, ctx:GrammarParser.For_range_statementContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#for_range_statement.
-    def exitFor_range_statement(self, ctx:GrammarParser.For_range_statementContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#pass_statement.
-    def enterPass_statement(self, ctx:GrammarParser.Pass_statementContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#pass_statement.
-    def exitPass_statement(self, ctx:GrammarParser.Pass_statementContext):
         pass
 
 

@@ -1,6 +1,7 @@
 IF true:
-PASS;
-END;
+    PASS;
+END
+
 STACK <int> s1;
 QUEUE <float> q1;
 DEQUE <string> dq1;
@@ -13,9 +14,11 @@ IF x >= 10:
 ELIF x == 11:
     x = 1;
 ELSE:
-    x +=2;
-END;
+    x += 2;
+END
 
-WHILE x > 0:
-    x -= 1;
-END;
+float y = 20.0;
+
+WHILE y >= 5.0:
+    y /= 2;
+END
