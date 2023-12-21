@@ -2,7 +2,7 @@
 Compilator made with ANTL4: Custom language -> C++
 
 
-# Code syntax example:
+# Code syntax:
 
 STRUCTURE TYPES: STACK (LIFO), QUQUE (FIFO), DEQUE (DOUBLE ENDED QUEUE)
 
@@ -21,7 +21,7 @@ LOOPS: FOR, WHILE, DO WHILE
 
 LOGIC: IF, ELSE
 
----------------------------------------
+## Example 1
 
 STRUCT Element:
     int value;
@@ -38,6 +38,7 @@ DELETE stack1;
 DELETE queue2;
 DELETE deque3;
 
+## Example 2
 
 DEF MAIN:
     print(siema)
@@ -78,7 +79,7 @@ WHILE EL != NULL:
 
 
 
----------------------------------------
+## Example 3
 
 
 FUNC MAIN:
