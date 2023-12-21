@@ -1,0 +1,18 @@
+
+
+FOR x IN RANGE(1, 10):
+    // PRINT("Dlugosc lacha = {x:%d}\n"); // --> printf("Dlugosc lacha = %d", x);
+    PASS;
+END
+
+STACK <int> stack;
+
+FOR s IN stack:
+    s += 1;
+END
+
+int i = 10;
+
+WHILE i < 1:
+    i-=1;
+END
