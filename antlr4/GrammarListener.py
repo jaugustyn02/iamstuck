@@ -116,39 +116,57 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#expr.
-    def enterExpr(self, ctx:GrammarParser.ExprContext):
+    # Enter a parse tree produced by GrammarParser#method_call.
+    def enterMethod_call(self, ctx:GrammarParser.Method_callContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#expr.
-    def exitExpr(self, ctx:GrammarParser.ExprContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#declare.
-    def enterDeclare(self, ctx:GrammarParser.DeclareContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#declare.
-    def exitDeclare(self, ctx:GrammarParser.DeclareContext):
+    # Exit a parse tree produced by GrammarParser#method_call.
+    def exitMethod_call(self, ctx:GrammarParser.Method_callContext):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#arith_opr.
-    def enterArith_opr(self, ctx:GrammarParser.Arith_oprContext):
+    # Enter a parse tree produced by GrammarParser#function_call.
+    def enterFunction_call(self, ctx:GrammarParser.Function_callContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#arith_opr.
-    def exitArith_opr(self, ctx:GrammarParser.Arith_oprContext):
+    # Exit a parse tree produced by GrammarParser#function_call.
+    def exitFunction_call(self, ctx:GrammarParser.Function_callContext):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#arith_assign_opr.
-    def enterArith_assign_opr(self, ctx:GrammarParser.Arith_assign_oprContext):
+    # Enter a parse tree produced by GrammarParser#return_statement.
+    def enterReturn_statement(self, ctx:GrammarParser.Return_statementContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#arith_assign_opr.
-    def exitArith_assign_opr(self, ctx:GrammarParser.Arith_assign_oprContext):
+    # Exit a parse tree produced by GrammarParser#return_statement.
+    def exitReturn_statement(self, ctx:GrammarParser.Return_statementContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#expression.
+    def enterExpression(self, ctx:GrammarParser.ExpressionContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#expression.
+    def exitExpression(self, ctx:GrammarParser.ExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#arith_operator.
+    def enterArith_operator(self, ctx:GrammarParser.Arith_operatorContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#arith_operator.
+    def exitArith_operator(self, ctx:GrammarParser.Arith_operatorContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#arith_assign_operator.
+    def enterArith_assign_operator(self, ctx:GrammarParser.Arith_assign_operatorContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#arith_assign_operator.
+    def exitArith_assign_operator(self, ctx:GrammarParser.Arith_assign_operatorContext):
         pass
 
 
@@ -179,12 +197,21 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#declaration.
-    def enterDeclaration(self, ctx:GrammarParser.DeclarationContext):
+    # Enter a parse tree produced by GrammarParser#single_declaration.
+    def enterSingle_declaration(self, ctx:GrammarParser.Single_declarationContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#declaration.
-    def exitDeclaration(self, ctx:GrammarParser.DeclarationContext):
+    # Exit a parse tree produced by GrammarParser#single_declaration.
+    def exitSingle_declaration(self, ctx:GrammarParser.Single_declarationContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#block_declaration.
+    def enterBlock_declaration(self, ctx:GrammarParser.Block_declarationContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#block_declaration.
+    def exitBlock_declaration(self, ctx:GrammarParser.Block_declarationContext):
         pass
 
 
@@ -197,12 +224,21 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#structure_declaration.
-    def enterStructure_declaration(self, ctx:GrammarParser.Structure_declarationContext):
+    # Enter a parse tree produced by GrammarParser#container_declaration.
+    def enterContainer_declaration(self, ctx:GrammarParser.Container_declarationContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#structure_declaration.
-    def exitStructure_declaration(self, ctx:GrammarParser.Structure_declarationContext):
+    # Exit a parse tree produced by GrammarParser#container_declaration.
+    def exitContainer_declaration(self, ctx:GrammarParser.Container_declarationContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#function_declaration.
+    def enterFunction_declaration(self, ctx:GrammarParser.Function_declarationContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#function_declaration.
+    def exitFunction_declaration(self, ctx:GrammarParser.Function_declarationContext):
         pass
 
 
@@ -305,12 +341,12 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#data_types.
-    def enterData_types(self, ctx:GrammarParser.Data_typesContext):
+    # Enter a parse tree produced by GrammarParser#data_type.
+    def enterData_type(self, ctx:GrammarParser.Data_typeContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#data_types.
-    def exitData_types(self, ctx:GrammarParser.Data_typesContext):
+    # Exit a parse tree produced by GrammarParser#data_type.
+    def exitData_type(self, ctx:GrammarParser.Data_typeContext):
         pass
 
 
@@ -368,12 +404,21 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#data_structures.
-    def enterData_structures(self, ctx:GrammarParser.Data_structuresContext):
+    # Enter a parse tree produced by GrammarParser#void.
+    def enterVoid(self, ctx:GrammarParser.VoidContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#data_structures.
-    def exitData_structures(self, ctx:GrammarParser.Data_structuresContext):
+    # Exit a parse tree produced by GrammarParser#void.
+    def exitVoid(self, ctx:GrammarParser.VoidContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#container_type.
+    def enterContainer_type(self, ctx:GrammarParser.Container_typeContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#container_type.
+    def exitContainer_type(self, ctx:GrammarParser.Container_typeContext):
         pass
 
 

@@ -1,63 +1,55 @@
 grammar Grammar;
 
+// START
 start_ : statement* EOF;
 
 
 // STATEMENTS
-
 statement : single_statement ';'
           | block_statement 'END'
           ;
 
-block_statement : if_statement
-                | loop_statement
-                ;
+block_statement : if_statement | loop_statement ;
 
-single_statement: declaration
-                | pass_statement
-                | assign
-                ;
+single_statement: single_declaration | assign | pass_statement | method_call | function_call;
 
-loop_statement : while_statement
-               | for_statement
-               ;
 
-for_statement : for_range_statement
-              | for_each_statement
-              ;
+loop_statement : while_statement | for_statement | block_declaration;
+
+for_statement : for_range_statement | for_each_statement ;
 
 if_statement : 'IF' condition ':' statement+ ('ELIF' condition ':' statement+)* ('ELSE' ':' statement+ )?;
 
 while_statement : 'WHILE' condition ':' statement+;
 
-for_range_statement : 'FOR' Id 'IN RANGE(' expr ',' expr (',' expr)?')' ':' statement+;
+for_range_statement : 'FOR' Id_literal 'IN RANGE(' expression (',' expression){0,2} ')' ':' statement+;
 
-for_each_statement : 'FOR' Id 'IN' Id ':' statement+;
-
+for_each_statement : 'FOR' Id_literal 'IN' Id_literal ':' statement+;
 
 pass_statement : 'PASS';
-assignment_statement : data_types Id '=' expr
-                     ;
 
-expr : Id
-     | expr arith_opr expr
-     | '(' expr ')'
-     | constant
-     ;
+// variable definition (maybe change name)
+assignment_statement : data_type (Id_literal '=' expression (',' Id_literal '=' expression)*)? ;
 
-declare : data_types Id
-        ;
+method_call : Id_literal '.' Id_literal '(' (expression (',' expression)*)? ')';
 
-arith_opr : add
-          | sub
-          | mul
-          | div
-          | mod
-          | inc
-          | dec
-          ;
-          
-arith_assign_opr : add_assign
+function_call : Id_literal '(' (expression (',' expression)*)? ')';
+
+return_statement : 'RETURN' (expression)? ';';
+
+// EXPRESSIONS
+expression : Id_literal
+           | expression arith_operator expression
+           | '(' expression ')'
+           | constant
+           | method_call
+           | function_call
+           ;
+
+// OPERATORS
+arith_operator : add | sub | mul | div | mod | inc | dec ;
+
+arith_assign_operator : add_assign
                 | sub_assign
                 | mul_assign
                 | div_assign
@@ -65,8 +57,9 @@ arith_assign_opr : add_assign
                 | '='
                 ;
 
-assign : Id arith_assign_opr expr;
+assign : Id_literal arith_assign_operator expression;
 
+// COMPARATORS
 comparator : equal
            | not_equal
            | greater
@@ -76,32 +69,30 @@ comparator : equal
            ;
 
 // CONDITION
-
 condition : bool_literal
-          | expr comparator expr 
+          | expression comparator expression 
 ;
 
 
 // DECLARATIONS
-declaration : structure_declaration
-            | variable_declaration
-            // | function_declaration
-            ;
+single_declaration : container_declaration
+                   | variable_declaration
+                   ;
 
-variable_declaration : data_types Id
+block_declaration : function_declaration ;
+
+variable_declaration : data_type Id_literal (',' Id_literal)*
                      | assignment_statement
                      ;
                      
-structure_declaration : data_structures '<' data_types '>' Id
-                      ;
+container_declaration : container_type '<' data_type '>' Id_literal (',' Id_literal)*;
+
 //TODO: check
-// function_declaration : 'DEF' '(' ;
-                    //   ;
+function_declaration : 'DEF' data_type Id_literal '(' (data_type Id_literal (',' data_type Id_literal)*)? ')' ':' (statement | return_statement)+;
 
-
-Id : [a-zA-Z_][a-zA-Z0-9_]*;
 
 // LITERALS
+Id_literal : [a-zA-Z_][a-zA-Z0-9_]*;
 
 constant : Integer_literal | Floating_point_literal | char_literal | string_literal | bool_literal | null_literal;
 
@@ -111,8 +102,8 @@ char_literal : '\'' . '\'';
 string_literal : '"' . '"';
 bool_literal : 'true' | 'false';
 null_literal : 'null';
-// OPERATORS
 
+// OPERATORS
 equal : '==';
 not_equal : '!=';
 greater : '>';
@@ -121,8 +112,7 @@ greater_equal : '>=';
 lesser_equal : '<=';
 
 // DATA TYPES
-
-data_types : integer | double | char | string | bool | float;
+data_type : integer | double | char | string | bool | float | void;
 
 integer : 'int';
 double : 'double';
@@ -130,10 +120,10 @@ char : 'char';
 string : 'string';
 bool : 'bool';
 float : 'float';
+void : 'void';
 
 // DATA STRUCTURE
-
-data_structures : stack
+container_type : stack
                 | deque
                 | queue
                 ;
@@ -143,7 +133,6 @@ queue : 'QUEUE' ;
 deque : 'DEQUE' ;
 
 // ARITHMETIC OPERATORS
-
 add : '+';
 sub : '-';
 mul : '*';
@@ -153,20 +142,14 @@ inc : '++';
 dec : '--';
 
 // ARITHMETIC ASSIGNMENT OPERATORS
-
 add_assign : '+=';
 sub_assign : '-=';
 mul_assign : '*=';
 div_assign : '/=';
 mod_assign : '%=';
 
-WS : [ \t\n\r]+ -> skip;
-
+// SKIP
+White_spaces : [ \t\n\r]+ -> skip;
 
 Comment : '//' ~[\r\n]* -> skip;
 Line_comment : '/*' .*? '*/' -> skip;
-
-// ':' -> '{'
-// 'END' -> '}'
-// 'ELIF' -> '{ END ELSE IF'
-// 'ELSE' -> '{ END ELSE'
