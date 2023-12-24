@@ -117,15 +117,6 @@ class TokenPrintListener(GrammarListener):
         print_token("exitPass_statement", ctx)
 
 
-    # Enter a parse tree produced by GrammarParser#assignment_statement.
-    def enterAssignment_statement(self, ctx:GrammarParser.Assignment_statementContext):
-        print_token("enterAssignment_statement", ctx)
-
-    # Exit a parse tree produced by GrammarParser#assignment_statement.
-    def exitAssignment_statement(self, ctx:GrammarParser.Assignment_statementContext):
-        print_token("exitAssignment_statement", ctx)
-
-
     # Enter a parse tree produced by GrammarParser#method_call.
     def enterMethod_call(self, ctx:GrammarParser.Method_callContext):
         print_token("enterMethod_call", ctx)
@@ -242,13 +233,13 @@ class TokenPrintListener(GrammarListener):
         print_token("exitContainer_declaration", ctx)
 
 
-    # Enter a parse tree produced by GrammarParser#function_declaration.
-    def enterFunction_declaration(self, ctx:GrammarParser.Function_declarationContext):
-        print_token("enterFunction_declaration", ctx)
+    # Enter a parse tree produced by GrammarParser#function_definition.
+    def enterFunction_definition(self, ctx:GrammarParser.Function_definitionContext):
+        print_token("enterFunction_definition", ctx)
 
-    # Exit a parse tree produced by GrammarParser#function_declaration.
-    def exitFunction_declaration(self, ctx:GrammarParser.Function_declarationContext):
-        print_token("exitFunction_declaration", ctx)
+    # Exit a parse tree produced by GrammarParser#function_definition.
+    def exitFunction_definition(self, ctx:GrammarParser.Function_definitionContext):
+        print_token("exitFunction_definition", ctx)
 
 
     # Enter a parse tree produced by GrammarParser#constant.

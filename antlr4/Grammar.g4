@@ -29,7 +29,6 @@ for_each_statement : 'FOR' Id_literal 'IN' Id_literal ':' statement+;
 pass_statement : 'PASS';
 
 // variable definition (maybe change name)
-assignment_statement : data_type (Id_literal '=' expression (',' Id_literal '=' expression)*)? ;
 
 method_call : Id_literal '.' Id_literal '(' (expression (',' expression)*)? ')';
 
@@ -50,12 +49,12 @@ expression : Id_literal
 arith_operator : add | sub | mul | div | mod | inc | dec ;
 
 arith_assign_operator : add_assign
-                | sub_assign
-                | mul_assign
-                | div_assign
-                | mod_assign
-                | '='
-                ;
+                      | sub_assign
+                      | mul_assign
+                      | div_assign
+                      | mod_assign
+                      | '='
+                      ;
 
 assign : Id_literal arith_assign_operator expression;
 
@@ -71,24 +70,22 @@ comparator : equal
 // CONDITION
 condition : bool_literal
           | expression comparator expression 
-;
-
+          ;
 
 // DECLARATIONS
 single_declaration : container_declaration
                    | variable_declaration
                    ;
 
-block_declaration : function_declaration ;
+block_declaration : function_definition ;
 
 variable_declaration : data_type Id_literal (',' Id_literal)*
-                     | assignment_statement
+                     | data_type (Id_literal '=' expression (',' Id_literal '=' expression)*)?
                      ;
-                     
+
 container_declaration : container_type '<' data_type '>' Id_literal (',' Id_literal)*;
 
-//TODO: check
-function_declaration : 'DEF' data_type Id_literal '(' (data_type Id_literal (',' data_type Id_literal)*)? ')' ':' (statement | return_statement)+;
+function_definition : 'DEF' data_type Id_literal '(' (data_type Id_literal (',' data_type Id_literal)*)? ')' ':' (statement | return_statement)+;
 
 
 // LITERALS
