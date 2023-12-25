@@ -4,11 +4,11 @@ FOR i IN RANGE(1, 10):
     PASS;
 END
 
-FOR i in RANGE(5):
+FOR i IN RANGE(5):
     PRINT(i);
 END
 
-FOR j in RANGE(100, -1, -1):
+FOR j IN RANGE(100, -1, -1):
     PRINT(i*2);
 END
 

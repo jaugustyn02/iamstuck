@@ -15,3 +15,7 @@ stack.push(x);
 stack.push(2);
 
 stack.pop();
+
+x++;
+++y;
+--z;

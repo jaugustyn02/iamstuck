@@ -10,4 +10,4 @@ PRINT("x = ", x, ", s = ", s, "\n");
 PRINTLN("x = ", x, ", s = ", s);
 
 // 3.
-PRINTF("x = {x},  s = {s} \n");
+PRINTF("x = {},  s = {} \n", x, s);
