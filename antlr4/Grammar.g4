@@ -38,9 +38,9 @@ function_call : Id_literal '(' (expression (',' expression)*) ')';
 pass_statement : 'PASS';
 return_statement : 'RETURN' (expression)? ';';
 
-
 // EXPRESSIONS
 expression : Id_literal
+           | Id_literal '[' expression ']'
            | expression arith_operator expression
            | '(' expression ')'
            | constant
@@ -62,9 +62,7 @@ single_declaration : container_declaration
 
 block_declaration : function_definition ;
 
-variable_declaration : data_type Id_literal (',' Id_literal)*
-                     | data_type (Id_literal '=' expression (',' Id_literal '=' expression)*)?
-                     ;
+variable_declaration : data_type Id_literal (assign expression)?  (',' Id_literal (assign expression)?)*;
 
 container_declaration : container_type '<' data_type '>' Id_literal (',' Id_literal)*;
 

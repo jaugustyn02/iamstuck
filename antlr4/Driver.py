@@ -11,11 +11,13 @@ from graphviz import Source
 
 from DOTGenerator import DOTGenerator
 
+
 class PrintVisitor(ParseTreeVisitor):
     def visitTerminal(self, node):
         print(Trees.getNodeText(node, GrammarParser.ruleNames))
         return super().visitTerminal(node)
-    
+
+
 def render_tree(tree, parser, name="tree"):
     dot_generator = DOTGenerator(parser.ruleNames, GrammarParser.literalNames, GrammarParser.symbolicNames)
     dot_data = dot_generator.to_dot(tree)
