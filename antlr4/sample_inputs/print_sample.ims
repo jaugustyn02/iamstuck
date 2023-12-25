@@ -1,0 +1,13 @@
+int x = 2;
+string s = "ola";
+
+// cout << "x = " << x << ", s = " << s << "\n";
+
+// 1.
+PRINT("x = ", x, ", s = ", s, "\n");
+
+// 2.
+PRINTLN("x = ", x, ", s = ", s);
+
+// 3.
+PRINTF("x = {},  s = {} \n", x, s);

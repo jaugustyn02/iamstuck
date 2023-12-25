@@ -2,7 +2,17 @@
 Compilator made with ANTL4: Custom language -> C++
 
 
-# Code syntax:
+# Tree graphs:
+## System requirements:
+
+    pip install -r tree_graphs_requirements.txt
+
+or
+
+    pip install graphviz
+
+
+# Code syntax example:
 
 STRUCTURE TYPES: STACK (LIFO), QUQUE (FIFO), DEQUE (DOUBLE ENDED QUEUE)
 
@@ -84,22 +94,3 @@ WHILE EL != NULL:
 
 FUNC MAIN:
     INIT QUEUE 10 q1
-
-
-
-
-####################################################################
-
-// Function to print all elements in the queue without popping
-void printQueue(const std::queue<int>& myQueue) {
-    std::cout << "Elements in the queue:\n";
-    
-    // Create a copy of the original queue to iterate without modifying it
-    std::queue<int> tempQueue = myQueue;
-
-    while (!tempQueue.empty()) {
-        std::cout << tempQueue.front() << " ";
-        tempQueue.pop();
-    }
-    std::cout << "\n";
-}

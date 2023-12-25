@@ -1,0 +1,19 @@
+
+DEF void main(int x, string args):
+    string s = "siema";
+    RETURN;
+END
+
+int x=-1, y, z;
+STACK <int> stack;
+
+stack.push(x);
+stack.push(2);
+stack.pop();
+
+PRINT(stack[0]);
+
+x++;
+++y;
+--z;
+
