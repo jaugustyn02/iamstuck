@@ -9,8 +9,8 @@ from antlr4.tree.Trees import Trees
 from antlr4.tree.Tree import ParseTreeVisitor
 from graphviz import Source
 
-from DOTGenerator import DOTGenerator
-
+from modules.DOTGenerator import DOTGenerator
+from IamstuckTranspiler import IamstuckTranspiler
 
 class PrintVisitor(ParseTreeVisitor):
     def visitTerminal(self, node):
@@ -45,7 +45,21 @@ def main(argv):
 
     # print(Trees.toStringTree(tree, None, parser))
 
+
+def test_transpiler(argv):
+    input_stream = FileStream(argv[1])
+    lexer = GrammarLexer(input_stream)
+    stream = CommonTokenStream(lexer)
+    parser = GrammarParser(stream)
+    tree = parser.start_()
+    if parser.getNumberOfSyntaxErrors() > 0:
+        print("syntax errors")
+    else:
+        transpiler = IamstuckTranspiler(parser.ruleNames, GrammarParser.literalNames, GrammarParser.symbolicNames)
+        transpiler.transpile(tree)
+
     
 
 if __name__ == '__main__':
-    main(sys.argv)
+    # main(sys.argv)
+    test_transpiler(sys.argv)
