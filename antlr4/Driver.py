@@ -55,9 +55,9 @@ def test_transpiler(argv):
     if parser.getNumberOfSyntaxErrors() > 0:
         print("syntax errors")
     else:
-        transpiler = IamstuckTranspiler(parser.ruleNames, GrammarParser.literalNames, GrammarParser.symbolicNames)
-        transpiler.transpile(tree)
-
+        transpiler = IamstuckTranspiler(parser.ruleNames)
+        code = transpiler.transpile(tree)
+        print(code)
     
 
 if __name__ == '__main__':

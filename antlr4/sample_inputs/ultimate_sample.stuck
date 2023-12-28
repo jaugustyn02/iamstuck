@@ -1,7 +1,7 @@
 int x = 10;
 
 DEF void print_hw():
-    PRINT("Hello World!\n");
+    PRINT("Hello World\n");
 END
 
 STACK <int> s;
@@ -14,6 +14,8 @@ print_hw();
 PRINT(max(6, 9), "\n");
 
 DEF int max(int a, int b):
-    IF a > b: RETURN a;
+    IF a > b:
+        RETURN a;
+    END
     RETURN b;
 END

@@ -2,8 +2,11 @@
 #include "containers.h"
 
 
-void print_hw();
-int max(int a, int b);
+Stack<int> s;
+
+
+// void print_hw();
+// int max(int a, int b);
 
 void print_hw() {
     std::cout << "Hello, World!" << "\n";
@@ -18,7 +21,6 @@ int max(int a, int b) {
 
 int main() {
     int x = 10;
-    Stack<int> s;
     s.push_back(x);
     std::cout << s.pop_back() << std::endl;
     print_hw();

@@ -9,8 +9,19 @@ statement : single_statement ';'
           | block_statement 'END'
           ;
 
-block_statement : if_statement | loop_statement | block_declaration;
-single_statement: single_declaration | assign_statement | pass_statement | method_call | function_call | printing_statement;
+block_statement : if_statement 
+                | loop_statement 
+                | block_declaration
+                ;
+
+single_statement: return_statement 
+                | pass_statement 
+                | printing_statement 
+                | single_declaration 
+                | assign_statement 
+                | method_call 
+                | function_call
+                ;
 
 // IF STATEMENTS
 if_statement : 'IF' condition ':' statement+ ('ELIF' condition ':' statement+)* ('ELSE' ':' statement+ )?;
@@ -32,11 +43,11 @@ printf_statement : 'PRINTF' '(' string_literal (',' expression)* ')';
 
 // CALL STATEMENTS
 method_call : Id_literal '.' Id_literal '(' (expression (',' expression)*)? ')';
-function_call : Id_literal '(' (expression (',' expression)*) ')';
+function_call : Id_literal '(' (expression (',' expression)*)? ')';
 
 // REST STATEMENTS
 pass_statement : 'PASS';
-return_statement : 'RETURN' (expression)? ';';
+return_statement : 'RETURN' (expression)?;
 
 // EXPRESSIONS
 expression : Id_literal
@@ -66,7 +77,7 @@ variable_declaration : data_type Id_literal (assign expression)?  (',' Id_litera
 
 container_declaration : container_type '<' data_type '>' Id_literal (',' Id_literal)*;
 
-function_definition : 'DEF' data_type Id_literal '(' (data_type Id_literal (',' data_type Id_literal)*)? ')' ':' (statement | return_statement)+;
+function_definition : 'DEF' data_type Id_literal '(' (data_type Id_literal (',' data_type Id_literal)*)? ')' ':' (statement)+;
 
 
 // IDENTIFIERS
