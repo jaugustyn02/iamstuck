@@ -1,4 +1,4 @@
-int x = 10;
+int x = 10 * (5 % 2);
 
 DEF void print_hw():
     PRINT("Hello World\n");

@@ -3,7 +3,7 @@ from antlr4 import *
 from GrammarParser import GrammarParser
 from GrammarLexer import GrammarLexer
 from GrammarListener import GrammarListener
-from TokenPrintListener import TokenPrintListener
+# from TokenPrintListener import TokenPrintListener
 
 from antlr4.tree.Trees import Trees
 from antlr4.tree.Tree import ParseTreeVisitor
@@ -33,7 +33,7 @@ def main(argv):
     lexer = GrammarLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = GrammarParser(stream)
-    tree = parser.start_()
+    tree = parser.program()
     if parser.getNumberOfSyntaxErrors() > 0:
         print("syntax errors")
     else:
@@ -51,7 +51,7 @@ def test_transpiler(argv):
     lexer = GrammarLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = GrammarParser(stream)
-    tree = parser.start_()
+    tree = parser.program()
     if parser.getNumberOfSyntaxErrors() > 0:
         print("syntax errors")
     else:

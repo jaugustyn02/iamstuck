@@ -1,7 +1,7 @@
 grammar Grammar;
 
 // START
-start_ : statement* EOF;
+program : statement* EOF;
 
 
 // STATEMENTS
@@ -24,13 +24,13 @@ single_statement: return_statement
                 ;
 
 // IF STATEMENTS
-if_statement : 'IF' condition ':' statement+ ('ELIF' condition ':' statement+)* ('ELSE' ':' statement+ )?;
+if_statement : 'IF' logical_expression ':' statement+ ('ELIF' logical_expression ':' statement+)* ('ELSE' ':' statement+ )?;
 
 // LOOP STATEMENTS
 loop_statement : while_statement | for_statement;
 
 for_statement : for_range_statement | for_each_statement;
-while_statement : 'WHILE' condition ':' statement+;
+while_statement : 'WHILE' logical_expression ':' statement+;
 for_range_statement : 'FOR' Id_literal 'IN RANGE(' expression ((',' expression)? ',' expression)? ')' ':' statement+;
 for_each_statement : 'FOR' Id_literal 'IN' Id_literal ':' statement+;
 
@@ -49,22 +49,51 @@ function_call : Id_literal '(' (expression (',' expression)*)? ')';
 pass_statement : 'PASS';
 return_statement : 'RETURN' (expression)?;
 
-// EXPRESSIONS
-expression : Id_literal
-           | Id_literal '[' expression ']'
-           | expression arith_operator expression
-           | '(' expression ')'
-           | constant
-           | method_call
-           | function_call
+
+// EXPRESSION STATEMENTS
+expression : single_expression 
+           | arithmetic_expression
+           | logical_expression
            ;
+
+// LOGICAL EXPRESSION
+logical_expression : logical_expression logical_operator logical_expression
+                   | logical_expression comparator logical_expression
+                   | not logical_expression
+                   | '(' logical_expression ')'
+                   | single_expression
+                   | arithmetic_expression
+                   ;
+
+// ARITHMETIC EXPRESSION
+arithmetic_expression : arithmetic_expression arith_operator arithmetic_expression
+                      | '(' arithmetic_expression ')'
+                      | single_expression
+                      ;
+
+// EXPRESSIONS
+single_expression : Id_literal
+                  | Id_literal '[' single_expression ']'
+                  | '(' single_expression ')'
+                  | constant
+                  | method_call
+                  | function_call
+                //    | expression arith_operator expression
+                  ;
 
 
 // CONDITION
-condition : bool_literal
-          | expression comparator expression 
-          ;
+// condition : bool_literal
+//           | expression comparator expression 
+//           ;
 
+
+logical_operator : and | or | xor;
+
+and : 'AND';
+or : 'OR';
+xor : 'XOR';
+not : 'NOT';
 
 // DECLARATIONS
 single_declaration : container_declaration
@@ -158,9 +187,7 @@ assign     : '=';
 
 
 // ARITHMETIC OPERATORS
-arith_operator : two_arg_arith_operator ;
-
-two_arg_arith_operator : add | sub | mul | div | mod ;
+arith_operator : add | sub | mul | div | mod ;
 
 add : '+';
 sub : '-';
