@@ -4,7 +4,7 @@ from typing import Any
 
 
 class TreeNode:
-    def __init__(self, parent, label, isTerminal, left_sep = "", right_sep=" ", indentation = False):
+    def __init__(self, parent, label, isTerminal, left_sep = "", right_sep="", indentation = False):
         self.parent = parent
         self.children: list[TreeNode] = []
         self.label = label

@@ -16,6 +16,12 @@ PRINT(max(6, 9), "\n");
 DEF int max(int a, int b):
     IF a > b:
         RETURN a;
+    ELIF a == b:
+        RETURN a;
+    ELIF a < b:
+        RETURN b;
+    ELSE:
+        PRINT("There is not else!\n");
     END
     RETURN b;
 END

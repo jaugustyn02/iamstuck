@@ -170,6 +170,15 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#arguments.
+    def enterArguments(self, ctx:GrammarParser.ArgumentsContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#arguments.
+    def exitArguments(self, ctx:GrammarParser.ArgumentsContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#expression.
     def enterExpression(self, ctx:GrammarParser.ExpressionContext):
         pass

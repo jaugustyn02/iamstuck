@@ -37,17 +37,21 @@ for_each_statement : 'FOR' id 'IN' id ':' statement+;
 // PRINT STATEMENTS
 printing_statement : print_statement | println_statement | printf_statement;
 
-print_statement : 'PRINT' '(' (expression (',' expression)*)? ')';
-println_statement : 'PRINTLN' '(' (expression (',' expression)*)? ')';
-printf_statement : 'PRINTF' '(' String_literal (',' expression)* ')';
+print_statement : 'PRINT' '(' (arguments)? ')';
+println_statement : 'PRINTLN' '(' (arguments)? ')';
+printf_statement : 'PRINTF' '(' String_literal (',' arguments)? ')';
 
 // CALL STATEMENTS
-method_call : id '.' id '(' (expression (',' expression)*)? ')';
-function_call : id '(' (expression (',' expression)*)? ')';
+method_call : id '.' id '(' (arguments)? ')';
+function_call : id '(' (arguments)? ')';
 
 // REST STATEMENTS
 pass_statement : 'PASS';
 return_statement : 'RETURN' (expression)?;
+
+
+// ARGUMENTS
+arguments : expression (',' expression)*;
 
 
 // EXPRESSION
