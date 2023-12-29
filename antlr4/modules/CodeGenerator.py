@@ -9,10 +9,9 @@ class CodeGenerator:
         def visit(node):
             if node.isTerminal:
                 return node.get_text()
-            return "".join([visit(child) for child in node.get_children()])
+            return "    "*node.identation + "".join([visit(child) for child in node.get_children()])
 
         cpp_code = visit(tree)
-        # cpp_code = cpp_code.replace(";", ";\n").replace("{", "{\n").replace("}", "}\n\n")
     
         return cpp_code
 

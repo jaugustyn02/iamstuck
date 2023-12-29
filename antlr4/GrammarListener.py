@@ -296,6 +296,15 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#id.
+    def enterId(self, ctx:GrammarParser.IdContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#id.
+    def exitId(self, ctx:GrammarParser.IdContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#constant.
     def enterConstant(self, ctx:GrammarParser.ConstantContext):
         pass
@@ -311,15 +320,6 @@ class GrammarListener(ParseTreeListener):
 
     # Exit a parse tree produced by GrammarParser#char_literal.
     def exitChar_literal(self, ctx:GrammarParser.Char_literalContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#string_literal.
-    def enterString_literal(self, ctx:GrammarParser.String_literalContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#string_literal.
-    def exitString_literal(self, ctx:GrammarParser.String_literalContext):
         pass
 
 

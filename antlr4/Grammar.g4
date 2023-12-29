@@ -31,26 +31,26 @@ loop_statement : while_statement | for_statement;
 
 for_statement : for_range_statement | for_each_statement;
 while_statement : 'WHILE' logical_expression ':' statement+;
-for_range_statement : 'FOR' Id_literal 'IN RANGE(' expression ((',' expression)? ',' expression)? ')' ':' statement+;
-for_each_statement : 'FOR' Id_literal 'IN' Id_literal ':' statement+;
+for_range_statement : 'FOR' id 'IN RANGE(' expression ((',' expression)? ',' expression)? ')' ':' statement+;
+for_each_statement : 'FOR' id 'IN' id ':' statement+;
 
 // PRINT STATEMENTS
 printing_statement : print_statement | println_statement | printf_statement;
 
 print_statement : 'PRINT' '(' (expression (',' expression)*)? ')';
 println_statement : 'PRINTLN' '(' (expression (',' expression)*)? ')';
-printf_statement : 'PRINTF' '(' string_literal (',' expression)* ')';
+printf_statement : 'PRINTF' '(' String_literal (',' expression)* ')';
 
 // CALL STATEMENTS
-method_call : Id_literal '.' Id_literal '(' (expression (',' expression)*)? ')';
-function_call : Id_literal '(' (expression (',' expression)*)? ')';
+method_call : id '.' id '(' (expression (',' expression)*)? ')';
+function_call : id '(' (expression (',' expression)*)? ')';
 
 // REST STATEMENTS
 pass_statement : 'PASS';
 return_statement : 'RETURN' (expression)?;
 
 
-// EXPRESSION STATEMENTS
+// EXPRESSION
 expression : single_expression 
            | arithmetic_expression
            | logical_expression
@@ -72,8 +72,8 @@ arithmetic_expression : arithmetic_expression arith_operator arithmetic_expressi
                       ;
 
 // EXPRESSIONS
-single_expression : Id_literal
-                  | Id_literal '[' single_expression ']'
+single_expression : id
+                  | id '[' arithmetic_expression ']'
                   | '(' single_expression ')'
                   | constant
                   | method_call
@@ -102,25 +102,26 @@ single_declaration : container_declaration
 
 block_declaration : function_definition ;
 
-variable_declaration : data_type Id_literal (assign expression)?  (',' Id_literal (assign expression)?)*;
+variable_declaration : data_type id (assign expression)?  (',' id (assign expression)?)*;
 
-container_declaration : container_type '<' data_type '>' Id_literal (',' Id_literal)*;
+container_declaration : container_type '<' data_type '>' id (',' id)*;
 
-function_definition : 'DEF' data_type Id_literal '(' (data_type Id_literal (',' data_type Id_literal)*)? ')' ':' (statement)+;
+function_definition : 'DEF' data_type id '(' (data_type id (',' data_type id)*)? ')' ':' (statement)+;
 
 
 // IDENTIFIERS
+id: Id_literal;
 Id_literal : [a-zA-Z_][a-zA-Z0-9_]*;
 
 
 // CONSTANT
-constant : Integer_literal | Floating_point_literal | char_literal | string_literal | bool_literal | null_literal;
+constant : Integer_literal | Floating_point_literal | char_literal | String_literal | bool_literal | null_literal;
 
 Integer_literal : '-'? [0-9]+;
 Floating_point_literal : '-'? [0-9]+ '.' [0-9]+;
 char_literal : '\'' . '\'';
 // string_literal : '"' . '"';
-string_literal : '"' ( ESCAPE_SEQUENCE | ~('\\'|'"') | '{' | '}' )* '"';
+String_literal : '"' ( ESCAPE_SEQUENCE | ~('\\'|'"') | '{' | '}')* '"';
 ESCAPE_SEQUENCE : '\\' ( '"' | '\\' | 'n' | 't' | 'r' | /* add other escape sequences as needed */ );
 bool_literal : 'true' | 'false';
 null_literal : 'null';
@@ -161,11 +162,11 @@ deque : 'DEQUE' ;
 
 
 // ASSIGN OPERATORS
-assign_statement : Id_literal assign_operator expression
-                 | Id_literal increment
-                 | Id_literal decrement
-                 | increment Id_literal
-                 | decrement Id_literal
+assign_statement : id assign_operator expression
+                 | id increment
+                 | id decrement
+                 | increment id
+                 | decrement id
                  ;
 
 assign_operator : add_assign

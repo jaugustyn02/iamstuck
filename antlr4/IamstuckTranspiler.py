@@ -59,8 +59,9 @@ class PrimeNodes:
             return True
         return False
 
-label_map = {
-            'IF': 'if',
+# Iamstuck keywords to C++ keywords
+cpp_terminal = {
+            'IF': '',
             'ELIF': 'else if',
             'ELSE': 'else',
             'WHILE': 'while',
@@ -73,19 +74,18 @@ label_map = {
             'STACK': 'Stack',
             'QUEUE': 'Queue',
             'DEQUE': 'Deque',
+            'AND': '&&',
+            'OR': '||',
+            'NOT': '!',
+            'XOR': '^',
             '<EOF>': '',
         }
 
-defalt_separator = ' '
-separator_map = {
-    '(': '',
-    ')': '',
-    '[': '',
+defalt_separator = ''
+terminal_separator = {
     '{': '\n',
     '}': '\n',
     ';': '\n',
-    ' ': '',
-    '': '',
 }
 
 
@@ -113,29 +113,52 @@ class IamstuckTranspiler:
         def get_label(node):
             if isinstance(node, TerminalNodeImpl):
                 return node.symbol.text
-                # text = node.symbol.text.replace('"', '\\"')
-                # return f'\\"{text}\\"' if " " in text else text
             else:
                 return f"{self.rule_names[node.getRuleIndex()]}"
             
-        def transpile_node(node, parent=None, indentation_tabs=0):
+        def handle_terminal(node, parent, indentation=False):
+            label = get_label(node)
+            label = cpp_terminal.get(label, label)
+            right_sep = terminal_separator.get(label, defalt_separator)
+            if label == "":
+                return None
+            
+            return TreeNode(parent, label, True, right_sep=right_sep, indentation=indentation)
+            
+        def transpile_node(node, parent=None, indentation=False):
             if isinstance(node, TerminalNodeImpl):
-                label = get_label(node)
-                label = label_map[label] if label in label_map else label
-                right_sep = separator_map.get(label, defalt_separator)
-                return TreeNode(parent, label, True, indent_tabs=indentation_tabs, right_sep=right_sep)
+                return handle_terminal(node, parent, indentation)
+            
+            cpp_node = TreeNode(parent, get_label(node), isTerminal=False, indentation=indentation)
+
+            if cpp_node.label == "if_statement":
+                return handle_if_statement(cpp_node, node)
             else:
-                cpp_node = TreeNode(parent, get_label(node), False)
                 for i in range(node.getChildCount()):
                     child = node.getChild(i)
-                    node_transpiled = transpile_node(child, cpp_node, indentation_tabs)
+                    node_transpiled = transpile_node(child, cpp_node)
                     if node_transpiled is not None:
                         cpp_node.add_child(node_transpiled)
-                
-                if not prime_nodes.add_child(cpp_node) and cpp_node.get_children_count() > 0:
-                    if cpp_node.label != "statement" or cpp_node.get_children_count() > 1:
-                        return cpp_node
+
+            if prime_nodes.add_child(cpp_node): # cpp_node.label in ("function_definition", "container_declaration")
                 return None
+            if cpp_node.get_children_count() == 0:
+                return None
+            if cpp_node.label == "statement" and cpp_node.get_children_count() <= 1:
+                return None
+            
+            # Return node only if it was not added to functions or containers and is not a empty statement
+            return cpp_node
+            
+        def handle_if_statement(cpp_node, node):
+            cpp_node.add_child(TreeNode(cpp_node, "if", True))
+            cpp_node.add_child(TreeNode(cpp_node, "(", True, right_sep=""))
+            cpp_node.add_child(transpile_node(node.getChild(1), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, ")", True))
+            cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
+            cpp_node.add_child(transpile_node(node.getChild(3), cpp_node, indentation=True))
+            # cpp_node.add_child(TreeNode(cpp_node, "}", True, right_sep="\n"))
+            return cpp_node
 
         prime_nodes = PrimeNodes()
         prime_nodes.main_function_body.add_child(transpile_node(tree))
