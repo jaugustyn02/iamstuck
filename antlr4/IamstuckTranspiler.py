@@ -15,7 +15,8 @@ class PrimeNodes:
     def init_includes(self):
         node = TreeNode(None, "includes", False)
         node.add_child(TreeNode(node, "#include <iostream>", True, right_sep="\n"))
-        node.add_child(TreeNode(node, "#include <containers.h>", True, right_sep="\n\n\n"))
+        node.add_child(TreeNode(node, "#include <containers.h>", True, right_sep="\n\n"))
+        node.add_child(TreeNode(node, "using namespace std;", True, right_sep="\n\n\n"))
         return node
     
     def init_functions(self):
@@ -70,7 +71,7 @@ cpp_terminal = {
             'BREAK': 'break',
             ':': '{',
             'END': '}',
-            'PASS': 'pass',
+            'PASS': '',
             'STACK': 'Stack',
             'QUEUE': 'Queue',
             'DEQUE': 'Deque',
@@ -149,6 +150,94 @@ class IamstuckTranspiler:
                     cpp_node.add_child(transpile_node(node.getChild(if_start_index+6), cpp_node, indentation=True))
             return cpp_node
         
+        def handle_for_each_statement(cpp_node, node):
+            cpp_node.add_child(TreeNode(cpp_node, "for", True, right_sep=""))
+            cpp_node.add_child(TreeNode(cpp_node, "(", True, right_sep=""))
+            cpp_node.add_child(TreeNode(cpp_node, "auto", True, right_sep=" "))
+            cpp_node.add_child(transpile_node(node.getChild(1), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, ":", True,left_sep=" " ,right_sep=" "))
+            cpp_node.add_child(transpile_node(node.getChild(3), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, ")", True, right_sep=""))
+            cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
+            cpp_node.add_child(transpile_node(node.getChild(5), cpp_node, True))
+            return cpp_node
+        
+        def handle_for_range_statement(cpp_node, node):
+            iterator = transpile_node(node.getChild(1), cpp_node)
+            cpp_node.add_child(TreeNode(cpp_node, "for", True, right_sep=""))
+            cpp_node.add_child(TreeNode(cpp_node, "(", True, right_sep=""))
+            if get_label(node.getChild(4)) == ")":
+                cpp_node.add_child(TreeNode(cpp_node, "auto ", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, "=0;", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, "<", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(3), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, "; i++)", True, right_sep=""))
+                cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
+                cpp_node.add_child(transpile_node(node.getChild(6), cpp_node, True))
+            elif get_label(node.getChild(6)) == ")":
+                cpp_node.add_child(TreeNode(cpp_node, "auto ", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, "=", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(3), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, ";", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, "<", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(5), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, ";", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, "++)", True, right_sep=""))
+                cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
+                cpp_node.add_child(transpile_node(node.getChild(8), cpp_node, True))
+            elif get_label(node.getChild(8)):
+                cpp_node.add_child(TreeNode(cpp_node, "auto ", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, " = ", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(3), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, ";(", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(7), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, "<0 ? ", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, " > ", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(5), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, ": ", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, " < ", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(5), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, ");", True, right_sep=""))
+                cpp_node.add_child(iterator)
+                cpp_node.add_child(TreeNode(cpp_node, "+=", True, right_sep=""))
+                cpp_node.add_child(transpile_node(node.getChild(7), cpp_node))
+                cpp_node.add_child(TreeNode(cpp_node, ")", True, right_sep=""))
+                cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
+                cpp_node.add_child(transpile_node(node.getChild(10), cpp_node, True))
+            return cpp_node
+        
+        def handle_while_statement(cpp_node, node):
+            cpp_node.add_child(TreeNode(cpp_node, 'while(', True, right_sep=""))
+            cpp_node.add_child(transpile_node(node.getChild(1), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, '){', True, right_sep="\n"))
+            cpp_node.add_child(transpile_node(node.getChild(3), cpp_node, True))
+            return cpp_node
+        
+        def handle_print_statement(cpp_node, node):
+            cpp_node.add_child(TreeNode(cpp_node, 'cout<<', True, right_sep=""))
+            cpp_node.add_child(transpile_node(node.getChild(2), cpp_node))
+            return cpp_node
+        
+        def handle_println_statement(cpp_node, node):
+            cpp_node.add_child(TreeNode(cpp_node, 'cout<<', True, right_sep=""))
+            cpp_node.add_child(transpile_node(node.getChild(2), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, '<<endl', True, right_sep=""))
+            return cpp_node
+        
+        def handle_variable_declaration(cpp_node, node):
+            cpp_node.add_child(transpile_node(node.getChild(0), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, " ", True, right_sep=""))
+            for i in range(1, node.getChildCount()):
+                cpp_node.add_child(transpile_node(node.getChild(i), cpp_node))
+            return cpp_node
 
         def handle_function_definition(cpp_node, node):
             type_spec_node = transpile_node(node.getChild(1), cpp_node)
@@ -194,6 +283,18 @@ class IamstuckTranspiler:
                 return handle_if_statement(cpp_node, node)
             elif cpp_node.label == "function_definition":
                 return handle_function_definition(cpp_node, node)
+            elif cpp_node.label == "for_each_statement":
+                return handle_for_each_statement(cpp_node, node)
+            elif cpp_node.label == "for_range_statement":
+                return handle_for_range_statement(cpp_node, node)
+            elif cpp_node.label == "while_statement":
+                return handle_while_statement(cpp_node, node)
+            elif cpp_node.label == "print_statement":
+                return handle_print_statement(cpp_node, node)
+            elif cpp_node.label == "println_statement":
+                return handle_println_statement(cpp_node, node)
+            elif cpp_node.label == "variable_declaration":
+                return handle_variable_declaration(cpp_node, node)
             else:
                 for i in range(node.getChildCount()):
                     child = node.getChild(i)

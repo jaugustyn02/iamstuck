@@ -16,7 +16,7 @@ class CodeGenerator:
                 return get_ident(node) + node.get_text()
             children =  [visit(child) for child in node.get_children()]
             if len(children) == 0:
-                children.appemd('')
+                children.append('')
             text = node.left_sep + get_ident(node) + ("".join(children[:-1])).replace('\n', '\n'+get_ident(node)) +  children[-1] + node.right_sep         
             return text
 
