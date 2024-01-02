@@ -61,5 +61,5 @@ def test_transpiler(argv):
     
 
 if __name__ == '__main__':
-    # main(sys.argv)
-    test_transpiler(sys.argv)
+    main(sys.argv)
+    # test_transpiler(sys.argv)
