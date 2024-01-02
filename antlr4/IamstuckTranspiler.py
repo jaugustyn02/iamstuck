@@ -127,8 +127,6 @@ class IamstuckTranspiler:
             label = get_label(node)
             label = cpp_terminal.get(label, label)
             right_sep = terminal_separator.get(label, defalt_separator)
-            if label == "":
-                return None
             
             return TreeNode(parent, label, True, right_sep=right_sep, indentation=indentation)
         
@@ -222,20 +220,56 @@ class IamstuckTranspiler:
             return cpp_node
         
         def handle_print_statement(cpp_node, node):
-            cpp_node.add_child(TreeNode(cpp_node, 'cout<<', True, right_sep=""))
-            cpp_node.add_child(transpile_node(node.getChild(2), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, 'cout << ', True, right_sep=""))
+            arg = node.getChild(2)
+            for i in range(arg.getChildCount()):
+                if get_label(arg.getChild(i)) == ",":
+                    cpp_node.add_child(TreeNode(cpp_node, " << ", True, right_sep=""))
+                else:
+                    cpp_node.add_child(transpile_node(arg.getChild(i), cpp_node))
             return cpp_node
         
         def handle_println_statement(cpp_node, node):
-            cpp_node.add_child(TreeNode(cpp_node, 'cout<<', True, right_sep=""))
-            cpp_node.add_child(transpile_node(node.getChild(2), cpp_node))
-            cpp_node.add_child(TreeNode(cpp_node, '<<endl', True, right_sep=""))
+            cpp_node.add_child(TreeNode(cpp_node, 'cout << ', True, right_sep=""))
+            arg = node.getChild(2)
+            for i in range(arg.getChildCount()):
+                if get_label(arg.getChild(i)) == ",":
+                    cpp_node.add_child(TreeNode(cpp_node, " << ", True, right_sep=""))
+                else:
+                    cpp_node.add_child(transpile_node(arg.getChild(i), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, ' << endl', True, right_sep=""))
             return cpp_node
         
+        def handle_printf_statement(cpp_node, node):
+            cpp_node.add_child(TreeNode(cpp_node, "cout << ", True, right_sep=""))
+            childreen = node.getChild(4)
+            licznik = 0
+            s = get_label(node.getChild(2))
+            for i in range(len(s)):
+                if s[i] == "{" and s[i+1] == "}":
+                    cpp_node.add_child(TreeNode(cpp_node, "\" << ", True, right_sep=""))
+                    cpp_node.add_child(transpile_node(childreen.getChild(licznik), cpp_node))
+                    licznik += 2
+                    if i != len(s)-2:
+                        cpp_node.add_child(TreeNode(cpp_node, " << \"", True, right_sep=""))
+                elif i>0 and s[i-1] == "{" and s[i] == "}":
+                    pass
+                else:
+                    cpp_node.add_child(TreeNode(cpp_node, s[i], True, right_sep=""))
+            return cpp_node
+
         def handle_variable_declaration(cpp_node, node):
             cpp_node.add_child(transpile_node(node.getChild(0), cpp_node))
             cpp_node.add_child(TreeNode(cpp_node, " ", True, right_sep=""))
             for i in range(1, node.getChildCount()):
+                cpp_node.add_child(transpile_node(node.getChild(i), cpp_node))
+            return cpp_node
+        
+        def handle_container_declaration(cpp_node, node):
+            for i in range(4):
+                cpp_node.add_child(transpile_node(node.getChild(i), cpp_node))
+            cpp_node.add_child(TreeNode(cpp_node, " ", True, right_sep=""))
+            for i in range(4, node.getChildCount()):
                 cpp_node.add_child(transpile_node(node.getChild(i), cpp_node))
             return cpp_node
 
@@ -295,6 +329,10 @@ class IamstuckTranspiler:
                 return handle_println_statement(cpp_node, node)
             elif cpp_node.label == "variable_declaration":
                 return handle_variable_declaration(cpp_node, node)
+            elif cpp_node.label == "container_declaration":
+                return handle_container_declaration(cpp_node, node)
+            elif cpp_node.label == "printf_statement":
+                return handle_printf_statement(cpp_node, node)
             else:
                 for i in range(node.getChildCount()):
                     child = node.getChild(i)
