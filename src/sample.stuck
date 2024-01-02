@@ -1,0 +1,45 @@
+int x = 10 * (5 % 2);
+
+DEF void print_hw():
+    PRINT("Hello World\n");
+END
+
+STACK <int> s;
+
+s.push_back(x);
+PRINTLN(s.pop_back());
+
+print_hw();
+
+PRINT(max(6, 9), "\n");
+
+DEF int max(int a, int b):
+    IF a > b:
+        RETURN a;
+    ELIF a == b:
+        RETURN a;
+    ELIF a < b:
+        RETURN b;
+    ELSE:
+        PRINT("There is not else!\n");
+    END
+    RETURN b;
+    IF a < b:
+        PRINT("hello there\n");
+    END
+END
+
+int a=5, b=6;
+IF a > b:
+        RETURN a;
+    ELIF a == b:
+        RETURN a;
+    ELIF a < b:
+        RETURN b;
+    ELSE:
+        PRINT("There is not else!\n");
+    END
+    RETURN b;
+    IF a < b:
+        PRINT("hello there\n");
+    END

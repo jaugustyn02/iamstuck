@@ -6,8 +6,8 @@ from modules.TreeNode import TreeNode
 class PrimeNodes:
     def __init__(self):
         self.includes_node = self.init_includes()
-        self.functions_node = self.init_functions()
         self.containers_node = self.init_containers()
+        self.functions_node = self.init_functions()
         self.main_function_node = self.init_main_function()
 
         self.prime_nodes: list[TreeNode] = [self.includes_node, self.containers_node, self.functions_node, self.main_function_node]
@@ -15,7 +15,7 @@ class PrimeNodes:
     def init_includes(self):
         node = TreeNode(None, "includes", False)
         node.add_child(TreeNode(node, "#include <iostream>", True, right_sep="\n"))
-        node.add_child(TreeNode(node, "#include <containers.h>", True, right_sep="\n\n"))
+        node.add_child(TreeNode(node, "#include \"containers.h\"", True, right_sep="\n\n"))
         node.add_child(TreeNode(node, "using namespace std;", True, right_sep="\n\n\n"))
         return node
     
@@ -47,18 +47,18 @@ class PrimeNodes:
     def get_prime_nodes(self):
         return self.prime_nodes
     
-    def add_child(self, node):
-        if node.label == "function_definition":
-            node.add_child(TreeNode(node, "}", True, right_sep="\n\n"))
-            node.parent = self.functions_node
-            self.functions_body.add_child(node)
-            return True
-        elif node.label == "container_declaration":
-            node.add_child(TreeNode(node, ";", True, right_sep="\n"))
-            node.parent = self.containers_node
-            self.containers_body.add_child(node)
-            return True
-        return False
+    def add_function(self, node: TreeNode):
+        node.add_child(TreeNode(node, "}", True, right_sep="\n\n"))
+        node.parent = self.functions_body
+        self.functions_body.add_child(node)
+    
+    def add_container(self, node: TreeNode):
+        node.add_child(TreeNode(node, ";", True, right_sep="\n"))
+        node.parent = self.containers_body
+        self.containers_body.add_child(node)
+
+    def add_main_func_body(self, node: TreeNode):
+        self.main_function_body.add_child(node)
 
 # Iamstuck keywords to C++ keywords
 cpp_terminal = {
@@ -100,9 +100,6 @@ class IamstuckTranspiler:
     def transpile(self, tree) -> str:
         # 1. Translate to C++ AST
         cpp_tree = self.generate_cpp_tree(tree)
-
-        # print(cpp_tree)
-        # Codegen.print_tree(cpp_tree)
 
         # 2. Generate C++ code from AST
         cpp_code = Codegen.generate(cpp_tree)
@@ -271,6 +268,13 @@ class IamstuckTranspiler:
             cpp_node.add_child(TreeNode(cpp_node, " ", True, right_sep=""))
             for i in range(4, node.getChildCount()):
                 cpp_node.add_child(transpile_node(node.getChild(i), cpp_node))
+            prime_nodes.add_container(cpp_node)
+            return None
+
+        def handle_return_statement(cpp_node, node):
+            cpp_node.add_child(TreeNode(cpp_node, "return ", True, right_sep=""))
+            for i in range(1, node.getChildCount()):
+                cpp_node.add_child(transpile_node(node.getChild(i), cpp_node))
             return cpp_node
 
         def handle_function_definition(cpp_node, node):
@@ -300,13 +304,16 @@ class IamstuckTranspiler:
 
             cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
 
-            func_body_node = transpile_node(node.getChild(var_decl_start_index + 2), cpp_node, indentation=True)
+            func_body_node = TreeNode(cpp_node, "func_body", False)
+            for child_index in range(var_decl_start_index + 2, node.getChildCount()):
+                func_body_node.add_child(transpile_node(node.getChild(child_index), cpp_node, indentation=True))
             cpp_node.add_child(func_body_node)
 
-            prime_nodes.add_child(cpp_node)
+            prime_nodes.add_function(cpp_node)
             return None
+        
 
-            
+
         def transpile_node(node, parent=None, indentation=False):
             if isinstance(node, TerminalNodeImpl):
                 return handle_terminal(node, parent, indentation)
@@ -333,6 +340,8 @@ class IamstuckTranspiler:
                 return handle_container_declaration(cpp_node, node)
             elif cpp_node.label == "printf_statement":
                 return handle_printf_statement(cpp_node, node)
+            elif cpp_node.label == "return_statement":
+                return handle_return_statement(cpp_node, node)
             else:
                 for i in range(node.getChildCount()):
                     child = node.getChild(i)
@@ -340,8 +349,6 @@ class IamstuckTranspiler:
                     if node_transpiled is not None:
                         cpp_node.add_child(node_transpiled)
 
-            if prime_nodes.add_child(cpp_node): # cpp_node.label in ("function_definition", "container_declaration")
-                return None
             if cpp_node.get_children_count() == 0:
                 return None
             if cpp_node.label == "statement" and cpp_node.get_children_count() <= 1:
@@ -352,7 +359,9 @@ class IamstuckTranspiler:
             
         
         prime_nodes = PrimeNodes()
-        prime_nodes.main_function_body.add_child(transpile_node(tree))
+        main_body = transpile_node(tree)
+        main_body.identation=True
+        prime_nodes.add_main_func_body(main_body)
 
         cpp_tree = TreeNode(None, "program", False)
         for node in prime_nodes.get_prime_nodes():
