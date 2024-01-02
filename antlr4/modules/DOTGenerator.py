@@ -15,8 +15,13 @@ class DOTGenerator:
     
     def get_label(self, node):
         if isinstance(node, TerminalNodeImpl):
-            text = node.symbol.text.replace('"', '\\"')
-            return f'\\"{text}\\"' if " " in text else text
+            # I want to preserve quotes and '\n', '\t', '\r' characters in the output
+            # text = node.symbol.text.replace('"', '\\"').replace('\\n', '\\\\n').replace('\\t', '\\\\t').replace('\\r', '\\\\r')
+            text = node.symbol.text.replace('\\', '\\\\').replace('"', '\\"')
+
+            # return node.symbol.text.replace('"', '\\"')
+            return text
+            # return f'\\"{text}\\"' if " " in text else text
         else:
             return f"{self.rule_names[node.getRuleIndex()]}"
         

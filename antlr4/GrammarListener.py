@@ -8,12 +8,12 @@ else:
 # This class defines a complete listener for a parse tree produced by GrammarParser.
 class GrammarListener(ParseTreeListener):
 
-    # Enter a parse tree produced by GrammarParser#start_.
-    def enterStart_(self, ctx:GrammarParser.Start_Context):
+    # Enter a parse tree produced by GrammarParser#program.
+    def enterProgram(self, ctx:GrammarParser.ProgramContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#start_.
-    def exitStart_(self, ctx:GrammarParser.Start_Context):
+    # Exit a parse tree produced by GrammarParser#program.
+    def exitProgram(self, ctx:GrammarParser.ProgramContext):
         pass
 
 
@@ -170,6 +170,15 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#arguments.
+    def enterArguments(self, ctx:GrammarParser.ArgumentsContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#arguments.
+    def exitArguments(self, ctx:GrammarParser.ArgumentsContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#expression.
     def enterExpression(self, ctx:GrammarParser.ExpressionContext):
         pass
@@ -179,12 +188,75 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#condition.
-    def enterCondition(self, ctx:GrammarParser.ConditionContext):
+    # Enter a parse tree produced by GrammarParser#logical_expression.
+    def enterLogical_expression(self, ctx:GrammarParser.Logical_expressionContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#condition.
-    def exitCondition(self, ctx:GrammarParser.ConditionContext):
+    # Exit a parse tree produced by GrammarParser#logical_expression.
+    def exitLogical_expression(self, ctx:GrammarParser.Logical_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#arithmetic_expression.
+    def enterArithmetic_expression(self, ctx:GrammarParser.Arithmetic_expressionContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#arithmetic_expression.
+    def exitArithmetic_expression(self, ctx:GrammarParser.Arithmetic_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#single_expression.
+    def enterSingle_expression(self, ctx:GrammarParser.Single_expressionContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#single_expression.
+    def exitSingle_expression(self, ctx:GrammarParser.Single_expressionContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#logical_operator.
+    def enterLogical_operator(self, ctx:GrammarParser.Logical_operatorContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#logical_operator.
+    def exitLogical_operator(self, ctx:GrammarParser.Logical_operatorContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#and.
+    def enterAnd(self, ctx:GrammarParser.AndContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#and.
+    def exitAnd(self, ctx:GrammarParser.AndContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#or.
+    def enterOr(self, ctx:GrammarParser.OrContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#or.
+    def exitOr(self, ctx:GrammarParser.OrContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#xor.
+    def enterXor(self, ctx:GrammarParser.XorContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#xor.
+    def exitXor(self, ctx:GrammarParser.XorContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#not.
+    def enterNot(self, ctx:GrammarParser.NotContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#not.
+    def exitNot(self, ctx:GrammarParser.NotContext):
         pass
 
 
@@ -233,6 +305,15 @@ class GrammarListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by GrammarParser#id.
+    def enterId(self, ctx:GrammarParser.IdContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#id.
+    def exitId(self, ctx:GrammarParser.IdContext):
+        pass
+
+
     # Enter a parse tree produced by GrammarParser#constant.
     def enterConstant(self, ctx:GrammarParser.ConstantContext):
         pass
@@ -248,15 +329,6 @@ class GrammarListener(ParseTreeListener):
 
     # Exit a parse tree produced by GrammarParser#char_literal.
     def exitChar_literal(self, ctx:GrammarParser.Char_literalContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#string_literal.
-    def enterString_literal(self, ctx:GrammarParser.String_literalContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#string_literal.
-    def exitString_literal(self, ctx:GrammarParser.String_literalContext):
         pass
 
 
@@ -545,15 +617,6 @@ class GrammarListener(ParseTreeListener):
 
     # Exit a parse tree produced by GrammarParser#arith_operator.
     def exitArith_operator(self, ctx:GrammarParser.Arith_operatorContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#two_arg_arith_operator.
-    def enterTwo_arg_arith_operator(self, ctx:GrammarParser.Two_arg_arith_operatorContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#two_arg_arith_operator.
-    def exitTwo_arg_arith_operator(self, ctx:GrammarParser.Two_arg_arith_operatorContext):
         pass
 
 
