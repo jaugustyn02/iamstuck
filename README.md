@@ -1,96 +1,36 @@
-# iamstuck
-Compilator made with ANTL4: Custom language -> C++
+# Iamstuck Transpiler
 
+Source code transpiler from Iamstuck to C++ made with ANTL4.
 
-# Tree graphs:
-## System requirements:
+## Authors
+- [Jan Augustyn](https://github.com/jaugustyn02)
+- [Jakub Kroczek](https://github.com/jkr02)
 
-    pip install -r tree_graphs_requirements.txt
+## System requirements
+   - Python 3.8.5
+   - antlr4-python3-runtime==4.13.1
+   - antlr4-tools == 0.2.1
 
-or
+## Installation
 
-    pip install graphviz
+To install any required packages, run this code:
 
+    pip install -r requirements.txt
 
-# Code syntax example:
+## How to run
 
-STRUCTURE TYPES: STACK (LIFO), QUQUE (FIFO), DEQUE (DOUBLE ENDED QUEUE)
+To transpile code to C++, compile it and run it, run this code:
 
-STRUCTURE OPERATIONS: PUSH, POP, POPLEFT, PUSHLEFT, PEEK, ISEMPTY, ISFULL, DELETE
+    make f="<path_to_file>"
 
-DATA TYPES: int, double, char, string, bool, void
+To only transpile code to C++:
 
-CLASS: STRUCT
+    make transpile f="<path_to_file>"
 
-OPERATORS: 
-- ARITHMETIC: +, -, *, /, %, ++, --, +=, -=, *=, /=, %=
-- COMPARATIVE: =, ==, !=, >, <, >=, <=
-- LOGICAL: &&, ||, !
+To only compile code:
 
-LOOPS: FOR, WHILE, DO WHILE
+    make compile_cpp f="<path_to_file>"
 
-LOGIC: IF, ELSE
+## Documentation
 
-## Example 1
-
-STRUCT Element:
-    int value;
-    char name;
-    # Element* next;
-
-
-STACK <int> stack1; # stack
-QUEUE <float> queue1; #queue
-DEQUE <string> deque1; # deque
-
-
-DELETE stack1;
-DELETE queue2;
-DELETE deque3;
-
-## Example 2
-
-DEF MAIN:
-    print(siema)
-
-
-IF siema > 0:
-    PASS
-ELIF siema == 0:
-    PASS
-ELSE:
-    PASS
-END
-
-
-':' -> '{'
-'END' -> '}'
-'ELIF' -> '{ END ELSE IF'
-'ELSE' -> '{ END ELSE'
-
-
-DEF MAIN:
-    PRINT()
-    PRINT("SIEMA")
-END
-
-RETURN
-
-
-
-FOR EL IN QUEUE:
-    IF 'SMTH':
-        # DO SMTH
-    ELSE: 
-
-WHILE EL != NULL:
-
-
-
-
-
-## Example 3
-
-
-FUNC MAIN:
-    INIT QUEUE 10 q1
+See [documentation](/Iamstuck-documentation.md).
