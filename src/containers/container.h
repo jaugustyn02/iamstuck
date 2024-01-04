@@ -30,7 +30,7 @@ class Container {
 
         bool empty(){
             return m_queue.empty();
-            }
+        }
 
         std::size_t size(){
             return m_queue.size();
@@ -40,7 +40,16 @@ class Container {
             return Container<T>::m_queue.back();
         }
 
-        void print();
+        void print(){
+            for (auto i: m_queue) {
+                std::cout << i << " ";
+            }
+            std::cout << std::endl;
+        };
+
+        T& operator[](int index) {
+            return Container<T>::m_queue[index];
+        }
 
     protected:
         std::deque<T> m_queue;

@@ -111,8 +111,9 @@ class IamstuckTranspiler:
         def get_label(node):
             if isinstance(node, TerminalNodeImpl):
                 return node.symbol.text
-            else:
-                return f"{self.rule_names[node.getRuleIndex()]}"
+            if node is None:
+                return ""
+            return f"{self.rule_names[node.getRuleIndex()]}"
             
         def get_first_terminal(node):
             if isinstance(node, TerminalNodeImpl):
@@ -133,16 +134,19 @@ class IamstuckTranspiler:
             cpp_node.add_child(transpile_node(node.getChild(if_start_index+1), cpp_node))
             cpp_node.add_child(TreeNode(cpp_node, ")", True))
             cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
-            cpp_node.add_child(transpile_node(node.getChild(if_start_index+3), cpp_node, indentation=True))
 
-            if node.getChildCount() > if_start_index + 4:
-                cpp_node.add_child(TreeNode(cpp_node, "}", True, right_sep=" "))
-                cpp_node.add_child(TreeNode(cpp_node, "else", True, right_sep=" "))
-                if get_label(node.getChild(if_start_index + 4)) == "ELIF":
-                    handle_if_statement(cpp_node, node, if_start_index+4)
-                else: # label == 'ELSE'
-                    cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
-                    cpp_node.add_child(transpile_node(node.getChild(if_start_index+6), cpp_node, indentation=True))
+            for i in range(if_start_index+3, node.getChildCount()):
+                if get_label(node.getChild(i)) == "ELIF":
+                    cpp_node.add_child(TreeNode(cpp_node, "}", True, right_sep=" "))
+                    cpp_node.add_child(TreeNode(cpp_node, "else", True, right_sep=" "))
+                    handle_if_statement(cpp_node, node, i)
+                    break
+                elif get_label(node.getChild(i)) == "ELSE":
+                    cpp_node.add_child(TreeNode(cpp_node, "}", True, right_sep=" "))
+                    cpp_node.add_child(TreeNode(cpp_node, "else", True, right_sep=""))
+                else:
+                    cpp_node.add_child(transpile_node(node.getChild(i), cpp_node, indentation=True))
+
             return cpp_node
         
         def handle_for_each_statement(cpp_node, node):

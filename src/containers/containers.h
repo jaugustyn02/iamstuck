@@ -41,11 +41,11 @@ class Stack: public Container<T> {
         Stack() = default;
         ~Stack() = default;
 
-        void push_back(T val) {
+        void push(T val) {
             Container<T>::m_queue.push_back(val);
         }
 
-        T pop_back() {
+        T pop() {
             T val = Container<T>::m_queue.back();
             Container<T>::m_queue.pop_back();
             return val;
@@ -63,7 +63,7 @@ class Deque: public Container<T> {
             Container<T>::m_queue.push_front(val);
         }
 
-        void push_back(T val) {
+        void push(T val) {
             Container<T>::m_queue.push_back(val);
         }
 
@@ -73,7 +73,7 @@ class Deque: public Container<T> {
             return val;
         }
 
-        T pop_back() {
+        T pop() {
             T val = Container<T>::m_queue.back();
             Container<T>::m_queue.pop_back();
             return val;

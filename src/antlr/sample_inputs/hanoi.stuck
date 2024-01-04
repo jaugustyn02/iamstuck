@@ -1,0 +1,13 @@
+
+DEF void tower_of_hanoi(int n, char from, char to, char aux):
+    IF n == 1:
+        PRINTF("Move disk 1 from rod {} to rod {}\n", from, to);
+        RETURN;
+    END
+    tower_of_hanoi(n - 1, from, aux, to);
+    PRINTF("Move disk {} from rod {} to rod {}\n", n, from, to);
+    tower_of_hanoi(n - 1, aux, to, from);
+END
+
+int n = 3;
+tower_of_hanoi(n, 'A', 'C', 'B');

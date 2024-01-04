@@ -3,11 +3,11 @@
 all: transpile compile_cpp
 
 compile_cpp: containers/main.cpp
-	g++ -o out containers/main.cpp
-	./out
+	g++ -o main.exe containers/main.cpp
+	./main.exe
 
 transpile:
-	python run.py $(filename)
+	python run.py $(f)
 
 clean:
-	rm -f out containers/main.cpp
+	rm -f main.exe containers/main.cpp

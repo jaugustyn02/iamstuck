@@ -1,0 +1,62 @@
+// Implementation of tower of hanoi using stacks
+
+DEF void print_stacks():
+    PRINTF("A: ");
+    A.print();
+    PRINTF("B: ");
+    B.print();
+    PRINTF("C: ");
+    C.print();
+END
+
+
+DEF int pop(char s):
+    IF s == 'A':
+        RETURN A.pop();
+    ELIF s == 'B':
+        RETURN B.pop();
+    ELSE:
+        RETURN C.pop();
+    END
+END
+
+
+DEF void push(char s, int x):
+    IF s == 'A':
+        A.push(x);
+    ELIF s == 'B':
+        B.push(x);
+    ELSE:
+        C.push(x);
+    END
+END
+
+
+DEF void towerOfHanoi(int n, char a, char b, char c):
+    IF n == 1:
+        PRINTF("Move disk 1 from {} to {}\n", a, c);
+        int x = pop(a);
+        push(c, x);
+        print_stacks();
+        RETURN;
+    END
+
+    towerOfHanoi(n - 1, a, c, b);
+    PRINTF("Move disk {} from {} to {}\n", n, a, c);
+    int x = pop(a);
+    push(c, x);
+    print_stacks();
+    towerOfHanoi(n - 1, b, a, c);
+END
+
+
+
+int n = 4;
+STACK<int> A, B, C;
+
+FOR i IN RANGE(n, 0, -1):
+    A.push(i);
+END
+
+print_stacks();
+towerOfHanoi(n, 'A', 'B', 'C');
