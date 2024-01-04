@@ -129,12 +129,13 @@ class IamstuckTranspiler:
             return TreeNode(parent, label, True, right_sep=right_sep, indentation=indentation)
         
         def handle_if_statement(cpp_node, node, if_start_index=0):
-            cpp_node.add_child(TreeNode(cpp_node, "if", True, right_sep=""))
+            cpp_node.add_child(TreeNode(cpp_node, "if", True, right_sep=" "))
             cpp_node.add_child(TreeNode(cpp_node, "(", True, right_sep=""))
             cpp_node.add_child(transpile_node(node.getChild(if_start_index+1), cpp_node))
             cpp_node.add_child(TreeNode(cpp_node, ")", True))
             cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
 
+            skip_next_terminal = False
             for i in range(if_start_index+3, node.getChildCount()):
                 if get_label(node.getChild(i)) == "ELIF":
                     cpp_node.add_child(TreeNode(cpp_node, "}", True, right_sep=" "))
@@ -144,8 +145,12 @@ class IamstuckTranspiler:
                 elif get_label(node.getChild(i)) == "ELSE":
                     cpp_node.add_child(TreeNode(cpp_node, "}", True, right_sep=" "))
                     cpp_node.add_child(TreeNode(cpp_node, "else", True, right_sep=""))
-                else:
+                    cpp_node.add_child(TreeNode(cpp_node, "{", True, right_sep="\n"))
+                    skip_next_terminal = True # skip '{'
+                elif not skip_next_terminal:
                     cpp_node.add_child(transpile_node(node.getChild(i), cpp_node, indentation=True))
+                else:
+                    skip_next_terminal = False
 
             return cpp_node
         

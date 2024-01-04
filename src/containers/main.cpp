@@ -16,27 +16,27 @@ void print_stacks(){
 }
 
 int pop(char s){
-    if(s=='A'){
+    if (s=='A'){
         return A.pop();
-    } else if(s=='B'){
+    } else if (s=='B'){
         return B.pop();
-    } else    {
+    } else{
         return C.pop();
     }
 }
 
 void push(char s, int x){
-    if(s=='A'){
+    if (s=='A'){
         A.push(x);
-    } else if(s=='B'){
+    } else if (s=='B'){
         B.push(x);
-    } else    {
+    } else{
         C.push(x);
     }
 }
 
 void towerOfHanoi(int n, char a, char b, char c){
-    if(n==1){
+    if (n==1){
         cout << "Move disk 1 from " << a << " to " << c << "\n";
         int x=pop(a);
         push(c,x);
@@ -52,7 +52,7 @@ void towerOfHanoi(int n, char a, char b, char c){
 }
 
 int main(){
-    int n=4;
+    int n=3;
     for(auto i = n;(-1<0 ? i > 0: i < 0);i+=-1){
         A.push(i);
     }

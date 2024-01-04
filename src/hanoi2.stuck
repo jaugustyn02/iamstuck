@@ -51,7 +51,7 @@ END
 
 
 
-int n = 4;
+int n = 3;
 STACK<int> A, B, C;
 
 FOR i IN RANGE(n, 0, -1):
