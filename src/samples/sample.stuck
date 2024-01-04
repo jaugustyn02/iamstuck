@@ -6,8 +6,8 @@ END
 
 STACK <int> s;
 
-s.push_back(x);
-PRINTLN(s.pop_back());
+s.push(x);
+PRINTLN(s.pop());
 
 print_hw();
 
@@ -35,7 +35,7 @@ IF a > b:
     ELIF a == b:
         RETURN a;
     ELIF a < b:
-        RETURN b;
+        RETURN 0;
     ELSE:
         PRINT("There is not else!\n");
     END
